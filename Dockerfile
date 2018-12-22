@@ -28,6 +28,9 @@ RUN apt-get update && apt-get install -y \
 # Download installer script
 COPY --from=downloader --chown=33:33 /extracted/Chevereto /var/www/html
 
+# Use updated PHP config to enable larger file uploads
+COPY ./php.ini /usr/local/etc/php/php.ini
+
 # Expose the image directory as a volume
 VOLUME /var/www/html/images
 
@@ -37,10 +40,9 @@ ARG BUILD_DATE
 ARG CHEVERETO_VERSION=1.1.1
 
 # Set all required labels, we set it here to make sure the file is as reusable as possible
-LABEL org.label-schema.url="https://github.com/tanmng/docker-chevereto" \
+LABEL org.label-schema.url="https://github.com/esquireofoz/docker-chevereto" \
       org.label-schema.name="Chevereto Free" \
       org.label-schema.license="Apache-2.0" \
       org.label-schema.version="${CHEVERETO_VERSION}" \
-      org.label-schema.vcs-url="https://github.com/tanmng/docker-chevereto" \
-      maintainer="Tan Nguyen <tan.mng90@gmail.com>" \
+      org.label-schema.vcs-url="https://github.com/esquireofoz/docker-chevereto" \
       build_signature="Chevereto free version ${CHEVERETO_VERSION}; built on ${BUILD_DATE}; Using PHP version ${PHP_VERSION}"
